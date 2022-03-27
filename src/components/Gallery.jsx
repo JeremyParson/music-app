@@ -1,8 +1,10 @@
 import React from "react";
 import GalleryItem from "./GalleryItem";
+import MusicContext from "../contexts/MusicContext";
 
 function Gallery(props) {
-  const renderGalleryItems = props.data.map((song, i) => (
+  let music = React.useContext(MusicContext)
+  const renderGalleryItems = music.map((song, i) => (
     <GalleryItem song={song} key={i} />
   ));
 

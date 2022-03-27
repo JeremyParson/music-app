@@ -1,10 +1,8 @@
 import "./App.css";
 import SearchBar from "./components/SearchBar";
 import Gallery from "./components/Gallery";
-import { Fragment, useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AlbumView from "./views/AlbumView";
-import ArtistView from "./views/ArtistView";
+import { useEffect, useState } from "react";
+import MusicContext from './contexts/MusicContext'
 
 function App() {
   let [search, setSearch] = useState("");
@@ -35,21 +33,10 @@ function App() {
   return (
     <div className="App">
       {message}
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Fragment>
-                <SearchBar setSearch={setSearch} />
-                {data.length ? <Gallery data={data} /> : <div>No Tracks</div>}
-              </Fragment>
-            }
-          />
-          <Route path="/album/:id"  element={<AlbumView />}/>
-          <Route path="/artist/:id"  element={<ArtistView />}/>
-        </Routes>
-      </BrowserRouter>
+      <MusicContext.Provider value={data}>
+        <SearchBar setSearch={setSearch} />
+        {data.length ? <Gallery /> : <div>No Tracks</div>}
+      </MusicContext.Provider>
     </div>
   );
 }
